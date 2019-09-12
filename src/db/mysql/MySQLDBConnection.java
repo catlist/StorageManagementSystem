@@ -53,8 +53,8 @@ public class MySQLDBConnection implements DBConnection {
 				while (rs.next()) {
 					result.add(new ItemBuilder()
 							.setName(rs.getString("itemname"))
-							.setImageUrl("imageUrl")
-							.setUsernameOfPossession("usernameOfPossession")
+							.setImageUrl(rs.getString("imageUrl"))
+							.setUsernameOfPossession(rs.getString("usernameOfPossession"))
 							.build());
 				}
 			}
