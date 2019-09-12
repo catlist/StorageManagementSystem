@@ -5,10 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import db.DBConnection;
 import entity.Item;
+import entity.Item.ItemBuilder;
 
 public class MySQLDBConnection implements DBConnection {
 	private Connection conn;
@@ -36,9 +38,30 @@ public class MySQLDBConnection implements DBConnection {
 	}
 
 	@Override
-	public List<Item> searchItems(double lat, double lon, String term) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Item> searchItems(String searchBy) {
+		List<Item> result = new ArrayList<>();
+		if (conn == null) {
+			System.err.println("DB connection error.");
+			return result;
+		}
+
+		try {
+			if (searchBy.equals("all")) {
+				String sql = "SELECT * FROM items";
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					result.add(new ItemBuilder()
+							.setName(rs.getString("itemname"))
+							.setImageUrl("imageUrl")
+							.setUsernameOfPossession("usernameOfPossession")
+							.build());
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override

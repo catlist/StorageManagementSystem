@@ -11,15 +11,12 @@ public interface DBConnection {
 	public void close();
 
 	/**
-	 * Search items near a geolocation and a term (optional).
+	 * Search items.
 	 * 
-	 * @param userId
-	 * @param lat
-	 * @param lon
-	 * @param term   (Nullable)
+	 * @param searchBy
 	 * @return list of items
 	 */
-	public List<Item> searchItems(double lat, double lon, String term);
+	public List<Item> searchItems(String searchBy);
 
 	/**
 	 * Get full name of a user. (This is not needed for main course, just for demo
