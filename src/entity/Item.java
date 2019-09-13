@@ -4,34 +4,40 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Item {
-	private String name;
+	private String itemname;
 	private String imageUrl;
-	private String usernameOfPossession;
+	private String username;
+	private String quantity;
+	private String address;
 
 	private Item(ItemBuilder builder) {
-		this.name = builder.itemname;
+		this.itemname = builder.itemname;
 		this.imageUrl = builder.imageUrl;
-		this.usernameOfPossession = builder.usernameOfPossession;
+		this.username = builder.username;
+		this.quantity = builder.quantity;
+		this.address = builder.address;
 	}
 
-	public String getName() {
-		return name;
+	public String getItemName() {
+		return itemname;
 	}
 
 	public String getImageUrl() {
 		return imageUrl;
 	}
 
-	public String getUsernameOfPossession() {
-		return usernameOfPossession;
+	public String getUsername() {
+		return username;
 	}
 
 	public JSONObject toJsonObject() {
 		JSONObject obj = new JSONObject();
 		try {
-			obj.put("name", name);
+			obj.put("itemname", itemname);
 			obj.put("image_url", imageUrl);
-			obj.put("username_of_possession", usernameOfPossession);
+			obj.put("username", username);
+			obj.put("quantity", quantity);
+			obj.put("address", address);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -41,9 +47,11 @@ public class Item {
 	public static class ItemBuilder {
 		private String itemname;
 		private String imageUrl;
-		private String usernameOfPossession;
+		private String username;
+		private String quantity;
+		private String address;
 
-		public ItemBuilder setName(String itemname) {
+		public ItemBuilder setItemName(String itemname) {
 			this.itemname = itemname;
 			return this;
 		}
@@ -53,8 +61,18 @@ public class Item {
 			return this;
 		}
 
-		public ItemBuilder setUsernameOfPossession(String usernameOfPossession) {
-			this.usernameOfPossession = usernameOfPossession;
+		public ItemBuilder setUsername(String username) {
+			this.username = username;
+			return this;
+		}
+		
+		public ItemBuilder setQuantity(String quantity) {
+			this.quantity = quantity;
+			return this;
+		}
+		
+		public ItemBuilder setAddress(String address) {
+			this.address = address;
 			return this;
 		}
 

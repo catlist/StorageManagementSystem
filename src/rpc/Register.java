@@ -43,9 +43,10 @@ public class Register extends HttpServlet {
 			String password = input.getString("password");
 			String firstname = input.getString("first_name");
 			String lastname = input.getString("last_name");
+			String address = input.getString("address");
 
 			JSONObject obj = new JSONObject();
-			if (connection.registerUser(username, password, firstname, lastname)) {
+			if (connection.registerUser(username, password, firstname, lastname, address)) {
 				obj.put("status", "ok");
 			} else {
 				obj.put("status", "Registeration Failed");

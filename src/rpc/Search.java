@@ -46,7 +46,7 @@ public class Search extends HttpServlet {
 			List<Item> items = connection.searchItems(searchBy);
 			JSONArray array = new JSONArray();
 			for (Item item : items) {
-				System.out.println(item.getName());
+				System.out.println(item.getItemName());
 				JSONObject obj = item.toJsonObject();
 				array.put(obj);
 			}

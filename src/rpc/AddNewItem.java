@@ -51,11 +51,16 @@ public class AddNewItem extends HttpServlet {
 			JSONObject input = RpcHelper.readJsonObject(request);
 			String itemname = input.getString("itemname");
 			String imageUrl = input.getString("imageUrl");
-			String usernameOfPossession = input.getString("username");
+			String username = input.getString("username");
 			int quantity = input.getInt("quantity");
 
+			String fullName = connection.getFullname(username);
+			String address = connection.getAddress(username);
+
 			JSONObject obj = new JSONObject();
-			if (connection.registerItem(itemname, imageUrl, usernameOfPossession, quantity)) {
+			if (fullName == "") {
+				obj.put("status", "Username doesn't exist.");
+			} else if (connection.registerItem(itemname, imageUrl, fullName, quantity, address)) {
 				obj.put("status", "ok");
 			} else {
 				obj.put("status", "Registeration Failed");
