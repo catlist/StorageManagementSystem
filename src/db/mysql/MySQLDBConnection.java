@@ -52,9 +52,11 @@ public class MySQLDBConnection implements DBConnection {
 				ResultSet rs = ps.executeQuery();
 				while (rs.next()) {
 					result.add(new ItemBuilder()
-							.setName(rs.getString("itemname"))
+							.setItemName(rs.getString("itemname"))
 							.setImageUrl(rs.getString("imageUrl"))
-							.setUsernameOfPossession(rs.getString("usernameOfPossession"))
+							.setUsername(rs.getString("possession"))
+							.setQuantity(rs.getString("quantity"))
+							.setAddress(rs.getString("address"))
 							.build());
 				}
 			}
@@ -65,24 +67,24 @@ public class MySQLDBConnection implements DBConnection {
 	}
 
 	@Override
-	public boolean registerItem(String itemname, String imageUrl, String usernameOfPossession, int quantity) {
+	public boolean registerItem(String itemname, String imageUrl, String usernameOfPossession, int quantity, String address) {
 		if (conn == null) {
 			System.err.println("DB connection error.");
 			return false;
 		}
 		try {
-			String sql = "INSERT IGNORE INTO items VALUES (?,?,?,?)";
+			String sql = "INSERT IGNORE INTO items VALUES (?,?,?,?,?)";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, itemname);
-			ps.setString(2, imageUrl);
-			ps.setString(3, usernameOfPossession);
-			ps.setInt(4, quantity);
+			ps.setString(2, usernameOfPossession);
+			ps.setInt(3, quantity);
+			ps.setString(4, address);
+			ps.setString(5, imageUrl);
 			return ps.executeUpdate() == 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return false;
-
 	}
 
 	@Override
@@ -103,8 +105,28 @@ public class MySQLDBConnection implements DBConnection {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return name;
+	}
+	
+	@Override
+	public String getAddress(String username) {
+		if (conn == null) {
+			return null;
+		}
+		String address = "";
+
+		String sql = "SELECT address FROM users WHERE username = ?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, username);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				address = rs.getString("address");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return address;
 	}
 
 	@Override
@@ -129,23 +151,24 @@ public class MySQLDBConnection implements DBConnection {
 	}
 
 	@Override
-	public boolean registerUser(String userId, String password, String firstname, String lastname) {
+	public boolean registerUser(String userId, String password, String firstname, String lastname, String address) {
 		if (conn == null) {
 			System.err.println("DB connection error.");
 			return false;
 		}
 		try {
-			String sql = "INSERT IGNORE INTO users VALUES (?,?,?,?)";
+			String sql = "INSERT IGNORE INTO users VALUES (?,?,?,?,?)";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, userId);
 			ps.setString(2, password);
 			ps.setString(3, firstname);
 			ps.setString(4, lastname);
+			ps.setString(5, address);
 			return ps.executeUpdate() == 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
-		return false;
 	}
 
 }

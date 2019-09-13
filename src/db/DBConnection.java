@@ -46,19 +46,12 @@ public interface DBConnection {
 	 * @param password
 	 * @param firstname
 	 * @param lastname
+	 * @param address
 	 * @return boolean
 	 */
-	public boolean registerUser(String username, String password, String firstname, String lastname);
+	public boolean registerUser(String username, String password, String firstname, String lastname, String address);
 
-	/**
-	 * Register one new item
-	 * 
-	 * Return whether the item is successfully registered.
-	 * 
-	 * @param itemname
-	 * @param imageUrl
-	 * @param usernameOfPossession
-	 * @param quantity
-	 */
-	public boolean registerItem(String itemname, String imageUrl, String usernameOfPossession, int quantity);
+	public boolean registerItem(String itemname, String imageUrl, String usernameOfPossession, int quantity, String address);
+
+	public String getAddress(String username);
 }

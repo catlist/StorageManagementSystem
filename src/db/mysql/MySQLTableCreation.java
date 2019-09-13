@@ -28,11 +28,11 @@ public class MySQLTableCreation {
 				statement.executeUpdate(sql);
 
 				// Step 3 Create new tables
-				sql = "CREATE TABLE items (" + "itemname VARCHAR(255)," + "imageUrl VARCHAR(255)," + "usernameOfPossession VARCHAR(255)," + "quantity int" + ")";
+				sql = "CREATE TABLE items (" + "itemname VARCHAR(255)," + "possession VARCHAR(255)," + "quantity int," + "address VARCHAR(255)," + "imageUrl VARCHAR(255)" + ")";
 				statement.executeUpdate(sql);
 
 				sql = "CREATE TABLE users (" + "username VARCHAR(255) NOT NULL," + "password VARCHAR(255) NOT NULL,"
-						+ "first_name VARCHAR(255)," + "last_name VARCHAR(255)," + "PRIMARY KEY (username)" + ")";
+						+ "first_name VARCHAR(255)," + "last_name VARCHAR(255)," + "address VARCHAR(255)," + "PRIMARY KEY (username)" + ")";
 				statement.executeUpdate(sql);
 
 				/*
